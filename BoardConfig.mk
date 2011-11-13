@@ -1,4 +1,4 @@
-# Copyright (C) 2009 The Android Open Source Project
+# Copyright (C) 2011 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -50,7 +50,6 @@ WIFI_DRIVER_MODULE_NAME     := "tiwlan_drv"
 WIFI_FIRMWARE_LOADER        := "wlan_loader"
 WIFI_DRIVER_FW_STA_PATH     := "/system/etc/wifi/fw_wlan1271.bin"
 WIFI_DRIVER_FW_AP_PATH      := "/system/etc/wifi/fw_tiwlan_ap.bin"
-#PRODUCT_WIRELESS_TOOLS      := true
 
 # omap3 compat global
 HARDWARE_OMX := true
@@ -94,11 +93,6 @@ BOARD_USES_BOOTMENU := true
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_PREINSTALL := true
 TARGET_BOOTLOADER_BOARD_NAME := begonia
-
-# TODO: is this define for disable build the recovery & kernel the rom package file ?
-# This option may be removed in the future
-#TARGET_NO_RECOVERY := true
-#TARGET_NO_KERNEL := true
 
 # Keep old variables until system core patch is merged
 #TARGET_RECOVERY_PRE_COMMAND := "/system/bootmenu/script/reboot_command.sh recovery"
