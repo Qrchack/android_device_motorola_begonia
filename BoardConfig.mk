@@ -31,6 +31,7 @@ TARGET_BOARD_PLATFORM := omap3
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_BOOTLOADER_BOARD_NAME := begonia
 TARGET_GLOBAL_CFLAGS += -mtune=cortex-a8
 TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a8
 TARGET_OMAP3 := true
@@ -68,6 +69,10 @@ BOARD_USE_YUV422I_DEFAULT_COLORFORMAT := true
 BOARD_USES_GENERIC_AUDIO := false
 BUILD_WITH_TI_AUDIO := 1
 
+# Gps wrapper
+BOARD_USES_GPSSHIM := true
+BOARD_GPS_LIBRARIES := libgps.so
+
 # Graphics
 BOARD_EGL_CFG := device/motorola/begonia/egl.cfg
 BOARD_NO_RGBX_8888 := true
@@ -95,7 +100,6 @@ BOARD_USE_USB_MASS_STORAGE_SWITCH := true
 BOARD_USES_BOOTMENU := true
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_PREINSTALL := true
-TARGET_BOOTLOADER_BOARD_NAME := begonia
 
 # Keep old variables until system core patch is merged
 #TARGET_RECOVERY_PRE_COMMAND := "/system/bootmenu/script/reboot_command.sh recovery"
