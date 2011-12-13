@@ -49,7 +49,9 @@ else
 endif
 
 #app
-#PRODUCT_COPY_FILES += \
+PRODUCT_COPY_FILES += \
+	device/motorola/begonia/prebuilt/app/DroidSSHd.apk:system/app/DroidSSHd.apk \
+	device/motorola/begonia/prebuilt/lib/libNativeSSHd.so:system/lib/libNativeSSHd.so 
 #	device/motorola/begonia/prebuilt/app/basebandswitcherV4.0.apk:system/app/basebandswitcherV4.0.apk
 
 #Bootmenu
