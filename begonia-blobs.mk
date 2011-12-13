@@ -40,19 +40,20 @@ PRODUCT_COPY_FILES += \
 #prebuilt binaries (for buggy versions)
 PRODUCT_COPY_FILES += \
 	device/motorola/begonia/prebuilt/bin/fixDelSystem.sh:system/bin/fixDelSystem.sh \
-	device/motorola/begonia/prebuilt/bin/install2ndInit.sh:system/bin/install2ndInit.sh	
-	#device/motorola/begonia/prebuilt/bin/iptables:system/bin/iptables \
-ifdef CYANOGEN_RELEASE
-	PRODUCT_COPY_FILES += device/motorola/begonia/custom_backup_release.txt:system/etc/custom_backup_list.txt
-else
-	PRODUCT_COPY_FILES += device/motorola/begonia/custom_backup_list.txt:system/etc/custom_backup_list.txt
-endif
+	device/motorola/begonia/prebuilt/bin/install2ndInit.sh:system/bin/install2ndInit.sh
+#	device/motorola/begonia/prebuilt/bin/iptables:system/bin/iptables \
 
 #app
 PRODUCT_COPY_FILES += \
 	device/motorola/begonia/prebuilt/app/DroidSSHd.apk:system/app/DroidSSHd.apk \
 	device/motorola/begonia/prebuilt/lib/libNativeSSHd.so:system/lib/libNativeSSHd.so 
 #	device/motorola/begonia/prebuilt/app/basebandswitcherV4.0.apk:system/app/basebandswitcherV4.0.apk
+
+ifdef CYANOGEN_RELEASE
+	PRODUCT_COPY_FILES += device/motorola/begonia/custom_backup_release.txt:system/etc/custom_backup_list.txt
+else
+	PRODUCT_COPY_FILES += device/motorola/begonia/custom_backup_list.txt:system/etc/custom_backup_list.txt
+endif
 
 #Bootmenu
 PRODUCT_COPY_FILES += \
