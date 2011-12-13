@@ -39,10 +39,9 @@ PRODUCT_COPY_FILES += \
 
 #prebuilt binaries (for buggy versions)
 PRODUCT_COPY_FILES += \
-	device/motorola/begonia/prebuilt/bin/iptables:system/bin/iptables \
 	device/motorola/begonia/prebuilt/bin/fixDelSystem.sh:system/bin/fixDelSystem.sh \
 	device/motorola/begonia/prebuilt/bin/install2ndInit.sh:system/bin/install2ndInit.sh	
-
+	#device/motorola/begonia/prebuilt/bin/iptables:system/bin/iptables \
 ifdef CYANOGEN_RELEASE
 	PRODUCT_COPY_FILES += device/motorola/begonia/custom_backup_release.txt:system/etc/custom_backup_list.txt
 else
