@@ -71,7 +71,7 @@ BUILD_WITH_TI_AUDIO := 1
 
 # Gps wrapper
 BOARD_USES_GPSSHIM := true
-BOARD_GPS_LIBRARIES := libgps.so
+BOARD_GPS_LIBRARIES := libgps
 
 # Graphics
 BOARD_EGL_CFG := device/motorola/begonia/egl.cfg
