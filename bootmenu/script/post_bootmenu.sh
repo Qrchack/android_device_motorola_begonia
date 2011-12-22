@@ -20,14 +20,17 @@ mount -o remount,rw rootfs /
 mount -o remount,rw /dev/block/mtdblock7 /system
 ##################################################
 
-chmod 755 /system/bootmenu/init.d/*
-run-parts /system/bootmenu/init.d/
+if [ -d /system/bootmenu/init.d ]; then
+    chmod 755 /system/bootmenu/init.d/*
+    run-parts /system/bootmenu/init.d/
+fi
 
 # normal cleanup here (need fix in recovery first)
 # ...
 
 
 # fast button warning (to check when script is really used)
+if [ -f /sbin/busybox ]; then
 echo 1 > /sys/class/leds/button-backlight/brightness
 usleep 50000
 echo 0 > /sys/class/leds/button-backlight/brightness
@@ -40,10 +43,13 @@ echo 1 > /sys/class/leds/button-backlight/brightness
 usleep 50000
 echo 0 > /sys/class/leds/button-backlight/brightness
 
+exit 1
+
+fi
 
 ######## Don't Delete.... ########################
 mount -o remount,ro rootfs /
 mount -o remount,ro /dev/block/mtdblock7 /system
 ##################################################
 
-exit
+exit 0

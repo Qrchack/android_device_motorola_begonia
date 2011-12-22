@@ -109,6 +109,7 @@ PRODUCT_PACKAGES += \
 	hostapd.conf \
 	libhostapdcli \
 	bootmenu \
+	static_busybox \
 	Usb \
 	su
 # libOMX.TI.JPEG.Encoder \	

@@ -31,7 +31,6 @@ TARGET_BOARD_PLATFORM := omap3
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
-TARGET_BOOTLOADER_BOARD_NAME := begonia
 TARGET_GLOBAL_CFLAGS += -mtune=cortex-a8
 TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a8
 TARGET_OMAP3 := true
@@ -41,6 +40,11 @@ COMMON_GLOBAL_CFLAGS += -DWVGA_BUFFERS
 
 # test for wifi calling
 BOARD_USE_KINETO_COMPATIBILITY := true
+
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_PREINSTALL := true
+TARGET_NO_RADIOIMAGE := false
+TARGET_BOOTLOADER_BOARD_NAME := begonia
 
 # Wifi related defines
 BOARD_WPA_SUPPLICANT_DRIVER := CUSTOM
@@ -98,8 +102,7 @@ BOARD_USE_USB_MASS_STORAGE_SWITCH := true
 
 # Changes related to bootmenu
 BOARD_USES_BOOTMENU := true
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_PREINSTALL := true
+BOARD_BOOTMODE_CONFIG_FILE := /cache/recovery/bootmode.conf
 
 # Keep old variables until system core patch is merged
 #TARGET_RECOVERY_PRE_COMMAND := "/system/bootmenu/script/reboot_command.sh recovery"
