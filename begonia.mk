@@ -102,6 +102,7 @@ PRODUCT_PACKAGES += \
 	libOMX_Core \
 	sensors.begonia \
 	lights.begonia \
+	gps.begonia \
 	libaudiopolicy \
 	iwmulticall \
 	hostap \
