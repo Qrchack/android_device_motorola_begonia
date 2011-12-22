@@ -81,7 +81,6 @@ BOARD_GPS_LIBRARIES := libgps
 BOARD_EGL_CFG := device/motorola/begonia/egl.cfg
 BOARD_NO_RGBX_8888 := true
 BUILD_PV_VIDEO_ENCODERS := 1	
-BOARD_USE_KINETO_COMPATIBILITY := true
 
 # Blue Tooth
 BOARD_HAVE_BLUETOOTH := true
@@ -99,6 +98,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 # Mass Storage
 BOARD_USE_USB_MASS_STORAGE_SWITCH := true
+BOARD_MASS_STORAGE_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun0/file"
 
 # Changes related to bootmenu
 BOARD_USES_BOOTMENU := true
@@ -109,10 +109,13 @@ BOARD_BOOTMODE_CONFIG_FILE := /cache/recovery/bootmode.conf
 #TARGET_RECOVERY_PRE_COMMAND_CLEAR_REASON := true
 
 # Recovery
+TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 BOARD_CUSTOM_RECOVERY_KEYMAPPING:= ../../device/motorola/begonia/recovery_ui.c
 BOARD_HAS_NO_MISC_PARTITION := false
 BOARD_RECOVERY_IGNORE_BOOTABLES := true
 BOARD_HAS_SMALL_RECOVERY := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_NEVER_UMOUNT_SYSTEM := true
 #TARGET_RECOVERY_UI_LIB := librecovery_ui_generic
 #TARGET_RECOVERY_UPDATER_LIBS += librecovery_updater_generic
