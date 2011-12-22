@@ -26,7 +26,8 @@
 #         fix help text, implement simulated run (-s) [farmatito]
 # v2.03 - fixed chown group ownership output [Kastro]
 # v2.04 - replaced /system/sd with $SD_EXT_DIRECTORY [Firerat]
-VERSION="2.04"
+# v2.05 - replaced busybox w/ /sbin/busybox & fixed cut [kb7sqi]
+VERSION="2.05"
 
 # Defaults
 DEBUG=0 # Debug off by default
@@ -39,25 +40,25 @@ GID_MSG="Changing group ownership for:"
 PERM_MSG="Changing permissions for:"
 
 # Programs needed
-ECHO="busybox echo"
-GREP="busybox grep"
-EGREP="busybox egrep"
-CAT="busybox cat"
-CHOWN="busybox chown"
-CHMOD="busybox chmod"
-MOUNT="busybox mount"
-UMOUNT="busybox umount"
-CUT="busybox cut"
-FIND="busybox find"
-LS="busybox ls"
-TR="busybox tr"
-TEE="busybox tee"
-TEST="busybox test"
-SED="busybox sed"
-RM="busybox rm"
-WC="busybox wc"
-EXPR="busybox expr"
-DATE="busybox date"
+ECHO="/sbin/busybox echo"
+GREP="/sbin/busybox grep"
+EGREP="/sbin/busybox egrep"
+CAT="/sbin/busybox cat"
+CHOWN="/sbin/busybox chown"
+CHMOD="/sbin/busybox chmod"
+MOUNT="/sbin/busybox mount"
+UMOUNT="/sbin/busybox umount"
+CUT="/sbin/busybox cut"
+FIND="/sbin/busybox find"
+LS="/sbin/busybox ls"
+TR="/sbin/busybox tr"
+TEE="/sbin/busybox tee"
+TEST="/sbin/busybox test"
+SED="/sbin/busybox sed"
+RM="/sbin/busybox rm"
+WC="/sbin/busybox wc"
+EXPR="/sbin/busybox expr"
+DATE="/sbin/busybox date"
 
 # Initialise vars
 CODEPATH=""
@@ -248,7 +249,7 @@ fp_chown_gid()
 fp_chmod()
 {
    FP_OLDPER=$1
-   FP_OLDPER=$( $ECHO $FP_OLDPER | cut -c2-10 )
+   FP_OLDPER=$( $ECHO $FP_OLDPER | $CUT -c2-10 )
    FP_PERSTR=$2
    FP_PERNUM=$3
    FP_FILE=$4
@@ -457,7 +458,9 @@ fp_end()
    fi
    
    if $TEST $SYSMOUNT -eq 1; then
-      $UMOUNT /system > /dev/null 2>&1
+      #$UMOUNT /system > /dev/null 2>&1
+      echo "skipping umount /system.."
+      sync
    fi
    
    if $TEST $DATAMOUNT -eq 1; then
