@@ -83,6 +83,7 @@ on post-fs
     # wifi dirs
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/wifi/hostapd.sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
     mkdir /pds/wifi 0771 wifi wifi
@@ -144,6 +145,9 @@ on post-fs
     chmod 0700 /data/emt
     # Create wmdrm directory
     mkdir /pds/wmdrm 0775 mot_drm mot_drm
+
+    # copy hostapd configuration
+    copy /system/etc/wifi/softap/hostapd.conf /data/misc/wifi/hostapd.conf
 
     # Enable ADB mode
     # write /dev/usb_device_mode msc_adb
@@ -497,20 +501,45 @@ service akmd2 /system/bin/akmd2
     class post-zygote_services
     user compass
     group compass misc input
+
+# Wifi related services
 service wlan_loader /system/bin/wlan_loader -f /system/etc/wifi/fw_wlan1271.bin -i /system/etc/wifi/tiwlan.ini -e /pds/wifi/nvs_map.bin
     class post-zygote_services
     disabled
     oneshot
 service wpa_supplicant /system/bin/wpa_supplicant -Dtiwlan0 -itiwlan0 -c/data/misc/wifi/wpa_supplicant.conf
     class post-zygote_services
-# we will start as root and wpa_supplicant will switch to user wifi
-# after setting up the capabilities required for WEXT
-# user wifi
-# group wifi inet keystore
     socket wpa_tiwlan0 dgram 660 wifi wifi
     disabled
     oneshot
-service dhcpcd_tiwlan0 /system/bin/dhcpcd
+service ap_fmloader /system/bin/logwrapper /system/bin/wlan_loader -f /system/etc/wifi/fw_tiwlan_ap.bin -i /system/etc/wifi/tiwlan_ap.ini -e /pds/wifi/nvs_map.bin
+    class post-zygote_services
+    disabled
+    oneshot
+service ap_fmloader_rfmd /system/bin/logwrapper /system/bin/wlan_loader -f /system/etc/wifi/fw_tiwlan_ap_rfmd.bin -i /system/etc/wifi/tiwlan_ap_rfmd.ini -e /pds/wifi/nvs_map.bin
+    class post-zygote_services
+    disabled
+    oneshot
+service hostapd /system/bin/logwrapper /system/bin/Hostapd /data/misc/wifi/hostapd.conf
+    class post-zygote_services
+    socket hostapd_tiwlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+service dnsmasq /system/bin/logwrapper /system/bin/dnsmasq -C/data/misc/wifi/dns.conf -k
+    class post-zygote_services
+    group wifi
+    disabled
+    oneshot
+service mynet_start /system/bin/logwrapper /system/bin/sh /data/misc/wifi/forward_start.sh
+    class post-zygote_services
+    disabled
+    oneshot
+service mynet_stop /system/bin/logwrapper /system/bin/sh /data/misc/wifi/forward_stop.sh
+    class post-zygote_services
+    disabled
+    oneshot
+#service dhcpcd_tiwlan0 /system/bin/dhcpcd
+service dhcpcd_tiwlan0 /system/bin/dhcpcd -ABKL tiwlan0
     class post-zygote_services
     disabled
     oneshot
@@ -518,6 +547,23 @@ service dhcpcd_bnep0 /system/bin/dhcpcd
     class post-zygote_services
     disabled
     oneshot
+service autoip /system/bin/dhcpcd -BK tiwlan0
+    class post-zygote_services
+    disabled
+    oneshot
+service btdhcpcd /system/bin/dhcpcd -ABKL bnep0
+    class post-zygote_services
+    disabled
+    oneshot
+service btautoip /system/bin/dhcpcd -BK bnep0
+    class post-zygote_services
+    disabled
+    oneshot
+service iprenew_tiwlan0 /system/bin/dhcpcd -n
+    class post-zygote_services
+    disabled
+    oneshot
+
 service baseimage /system/bin/dspexec -v -T /system/lib/dsp/baseimage.dof
     class media_early_init
     user media
