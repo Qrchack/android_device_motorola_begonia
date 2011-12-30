@@ -68,6 +68,7 @@ PRODUCT_COPY_FILES += \
 	device/motorola/begonia/bootmenu/binary/logwrapper.bin:system/bin/logwrapper.bin \
 	device/motorola/begonia/bootmenu/binary/lsof.static:system/bootmenu/binary/lsof \
 	device/motorola/begonia/bootmenu/binary/2nd-init.common:system/bootmenu/binary/2nd-init \
+	device/motorola/begonia/bootmenu/binary/busybox:system/bootmenu/binary/busybox \
 	device/motorola/begonia/bootmenu/config/bootmenu_bypass:system/bootmenu/config/bootmenu_bypass \
 	device/motorola/begonia/bootmenu/config/default.prop:system/bootmenu/config/default.prop \
 	device/motorola/begonia/bootmenu/config/default_bootmode.conf:system/bootmenu/config/default_bootmode.conf \
