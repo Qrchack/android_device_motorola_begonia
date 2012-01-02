@@ -25,14 +25,15 @@ LOCAL_MODULE := sensors.begonia
 
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 
-LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_TAGS := eng debug
 
 LOCAL_CFLAGS := -DLOG_TAG=\"Sensors\"
 
-LOCAL_SRC_FILES := sensors.c 		\
-		   nusensors.cpp 		\
-		   InputEventReader.cpp	\
-		   SensorBase.cpp
+LOCAL_SRC_FILES := \
+	sensors.c \
+	nusensors.cpp \
+	InputEventReader.cpp \
+	SensorBase.cpp
 
 LOCAL_SRC_FILES += SensorKXTF9.cpp
 LOCAL_SRC_FILES += SensorAK8973.cpp

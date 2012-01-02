@@ -100,7 +100,6 @@ PRODUCT_PACKAGES += \
 	libVendor_ti_omx \
 	libLCML \
 	libOMX_Core \
-	sensors.begonia \
 	lights.begonia \
 	gps.begonia \
 	libaudiopolicy \
