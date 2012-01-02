@@ -168,8 +168,7 @@ PRODUCT_PACKAGES += \
         LiveWallpapers \
         LiveWallpapersPicker \
         MagicSmokeWallpapers \
-        VisualizationWallpapers \
-	Launcher2
+        VisualizationWallpapers 
 
 # Publish that we support the live wallpaper feature.
 PRODUCT_COPY_FILES += \
