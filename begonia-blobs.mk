@@ -30,7 +30,6 @@ PRODUCT_COPY_FILES += \
 	device/motorola/begonia/recovery.fstab:system/etc/recovery.fstab \
 	device/motorola/begonia/prebuilt/etc/init.d/01sysctl:system/etc/init.d/01sysctl \
 	device/motorola/begonia/prebuilt/etc/init.d/05mountsd:system/etc/init.d/05mountsd \
-	device/motorola/begonia/prebuilt/etc/init.d/04pdsbackup:system/etc/init.d/04pdsbackup \
 	device/motorola/begonia/prebuilt/etc/init.d/90multitouch:system/etc/init.d/90multitouch \
 	device/motorola/begonia/prebuilt/etc/profile:system/etc/profile \
 	device/motorola/begonia/prebuilt/etc/sysctl.conf:system/etc/sysctl.conf \
