@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2011 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,15 @@
 
 /* Sensor types
  
-#define SENSOR_TYPE_ACCELEROMETER       1 //三轴加速度感应器 返回三个坐标轴的加速度  单位m/s2
-#define SENSOR_TYPE_MAGNETIC_FIELD      2   //磁场感应 返回三个坐标轴的数值  微特斯拉
-#define SENSOR_TYPE_ORIENTATION         3 //方向感应器 已过时 可以使用方法获得
-#define SENSOR_TYPE_GYROSCOPE           4 //陀螺仪 可判断方向 返回三个坐标轴上的角度
-#define SENSOR_TYPE_LIGHT               5 //光线感应器 单位 lux 勒克斯
-#define SENSOR_TYPE_PRESSURE            6 //压力感应器  单位 千帕斯卡
-#define SENSOR_TYPE_TEMPERATURE         7 //温度传感器 单位 摄氏度
-#define SENSOR_TYPE_PROXIMITY           8 //距离传感器
-#define SENSOR_TYPE_GRAVITY             9   //重力感应器
+#define SENSOR_TYPE_ACCELEROMETER       1  //三轴加速度感应器 返回三个坐标轴的加速度  单位m/s2
+#define SENSOR_TYPE_MAGNETIC_FIELD      2  //磁场感应 返回三个坐标轴的数值  微特斯拉
+#define SENSOR_TYPE_ORIENTATION         3  //方向感应器 已过时 可以使用方法获得
+#define SENSOR_TYPE_GYROSCOPE           4  //陀螺仪 可判断方向 返回三个坐标轴上的角度
+#define SENSOR_TYPE_LIGHT               5  //光线感应器 单位 lux 勒克斯
+#define SENSOR_TYPE_PRESSURE            6  //压力感应器  单位 千帕斯卡
+#define SENSOR_TYPE_TEMPERATURE         7  //温度传感器 单位 摄氏度
+#define SENSOR_TYPE_PROXIMITY           8  //距离传感器
+#define SENSOR_TYPE_GRAVITY             9  //重力感应器
 #define SENSOR_TYPE_LINEAR_ACCELERATION 10 //线性加速度
 #define SENSOR_TYPE_ROTATION_VECTOR     11 //翻转传感器
 * 
@@ -109,7 +109,7 @@ const struct sensors_module_t HAL_MODULE_INFO_SYM = {
         .version_major = 1,
         .version_minor = 0,
         .id = SENSORS_HARDWARE_MODULE_ID,
-        .name = "Motorola Defy Sensors Module",
+        .name = "Motorola Begonia Sensors Module",
         .author = "Sorin P. <sorin@hypermagik.com>",
         .methods = &sensors_module_methods,
     },
@@ -125,3 +125,4 @@ static int open_sensors(const struct hw_module_t* module, const char* name,
 }
 
 /*****************************************************************************/
+

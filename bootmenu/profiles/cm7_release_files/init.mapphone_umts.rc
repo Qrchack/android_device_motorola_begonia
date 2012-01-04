@@ -8,14 +8,6 @@ on post-fs
     mount yaffs2 mtd@system /system ro remount
     mount rootfs rootfs / rw remount
 
-# Busybox
-    export HISTFILE /data/local/tmp/.ash_history
-    export HISTFILESIZE 1000
-    export ENV /system/etc/profile
-
-# Other global env variables
-    export DSP_PATH /system/lib/dsp
-
 # Create mountpoints and mount tmpfs
     #mkdir /pds 0775 system system
     mkdir /tmp 0777 system system
@@ -83,10 +75,6 @@ on post-fs
     mkdir /pds/scim 0755 root radio
     chown root radio /pds/scim
     chmod 0755 /pds/scim
-    # Mount preinstall partition
-    #mkdir /preinstall 0771 system system
-    #chmod 0771 /preinstall
-    #chown system system /preinstall
     # create moto specific dirs for mystuff
     mkdir /data/download 0775 system system
     mkdir /data/download/mystuff 0775 system system
@@ -95,6 +83,7 @@ on post-fs
     # wifi dirs
     mkdir /data/misc/wifi 0770 wifi wifi
     mkdir /data/misc/wifi/sockets 0770 wifi wifi
+    mkdir /data/misc/wifi/hostapd.sockets 0770 wifi wifi
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chown dhcp dhcp /data/misc/dhcp
     mkdir /pds/wifi 0771 wifi wifi
@@ -157,6 +146,9 @@ on post-fs
     # Create wmdrm directory
     mkdir /pds/wmdrm 0775 mot_drm mot_drm
 
+    # copy hostapd configuration
+    copy /system/etc/wifi/softap/hostapd.conf /data/misc/wifi/hostapd.conf
+
     # Enable ADB mode
     # write /dev/usb_device_mode msc_adb
 
@@ -181,14 +173,15 @@ on post-fs
     insmod /system/lib/modules/modem_pm_driver.ko
     insmod /system/lib/modules/sec.ko
     insmod /system/lib/modules/tun.ko
+    insmod /system/lib/modules/vpnclient.ko
+    insmod /system/lib/modules/xt_multiport.ko
+
+    insmod /system/lib/modules/symsearch.ko
+    #insmod /system/lib/modules/usbled.ko
+
     insmod /system/lib/modules/nls_utf8.ko
     insmod /system/lib/modules/slow-work.ko
     insmod /system/lib/modules/cifs.ko
-    insmod /system/lib/modules/symsearch.ko
-    #insmod /system/lib/modules/usbled.ko
-    insmod /system/lib/modules/xt_multiport.ko
-    # Load Authentec VPN kernel module
-    insmod /system/lib/modules/vpnclient.ko
 
 on early-boot
 # Adjust the out of memory thresholds to account for the larget
@@ -236,6 +229,7 @@ on boot
    chown system system /sys/class/leds/red/brightness
    chown system system /sys/class/leds/green/brightness
    chown system system /sys/class/leds/blue/brightness
+   chown system system /sys/class/leds/usb/brightness
    chown system system /sys/class/leds/torch-flash/camera_strobe
    chown system system /sys/class/leds/torch-flash/flash_light
    chown system system /sys/class/leds/spotlight/brightness
@@ -252,6 +246,7 @@ on boot
    chmod 0660 /sys/class/leds/red/brightness
    chmod 0660 /sys/class/leds/green/brightness
    chmod 0660 /sys/class/leds/blue/brightness
+   chmod 0660 /sys/class/leds/usb/brightness
    chmod 0660 /sys/class/leds/torch-flash/camera_strobe
    chmod 0660 /sys/class/leds/torch-flash/flash_light
    chmod 0666 /sys/class/leds/spotlight/brightness
@@ -506,20 +501,45 @@ service akmd2 /system/bin/akmd2
     class post-zygote_services
     user compass
     group compass misc input
+
+# Wifi related services
 service wlan_loader /system/bin/wlan_loader -f /system/etc/wifi/fw_wlan1271.bin -i /system/etc/wifi/tiwlan.ini -e /pds/wifi/nvs_map.bin
     class post-zygote_services
     disabled
     oneshot
 service wpa_supplicant /system/bin/wpa_supplicant -Dtiwlan0 -itiwlan0 -c/data/misc/wifi/wpa_supplicant.conf
     class post-zygote_services
-# we will start as root and wpa_supplicant will switch to user wifi
-# after setting up the capabilities required for WEXT
-# user wifi
-# group wifi inet keystore
     socket wpa_tiwlan0 dgram 660 wifi wifi
     disabled
     oneshot
-service dhcpcd_tiwlan0 /system/bin/dhcpcd
+service ap_fmloader /system/bin/logwrapper /system/bin/wlan_loader -f /system/etc/wifi/fw_tiwlan_ap.bin -i /system/etc/wifi/tiwlan_ap.ini -e /pds/wifi/nvs_map.bin
+    class post-zygote_services
+    disabled
+    oneshot
+service ap_fmloader_rfmd /system/bin/logwrapper /system/bin/wlan_loader -f /system/etc/wifi/fw_tiwlan_ap_rfmd.bin -i /system/etc/wifi/tiwlan_ap_rfmd.ini -e /pds/wifi/nvs_map.bin
+    class post-zygote_services
+    disabled
+    oneshot
+service hostapd /system/bin/logwrapper /system/bin/Hostapd /data/misc/wifi/hostapd.conf
+    class post-zygote_services
+    socket hostapd_tiwlan0 dgram 660 wifi wifi
+    disabled
+    oneshot
+service dnsmasq /system/bin/logwrapper /system/bin/dnsmasq -C/data/misc/wifi/dns.conf -k
+    class post-zygote_services
+    group wifi
+    disabled
+    oneshot
+service mynet_start /system/bin/logwrapper /system/bin/sh /data/misc/wifi/forward_start.sh
+    class post-zygote_services
+    disabled
+    oneshot
+service mynet_stop /system/bin/logwrapper /system/bin/sh /data/misc/wifi/forward_stop.sh
+    class post-zygote_services
+    disabled
+    oneshot
+#service dhcpcd_tiwlan0 /system/bin/dhcpcd
+service dhcpcd_tiwlan0 /system/bin/dhcpcd -ABKL tiwlan0
     class post-zygote_services
     disabled
     oneshot
@@ -527,6 +547,23 @@ service dhcpcd_bnep0 /system/bin/dhcpcd
     class post-zygote_services
     disabled
     oneshot
+service autoip /system/bin/dhcpcd -BK tiwlan0
+    class post-zygote_services
+    disabled
+    oneshot
+service btdhcpcd /system/bin/dhcpcd -ABKL bnep0
+    class post-zygote_services
+    disabled
+    oneshot
+service btautoip /system/bin/dhcpcd -BK bnep0
+    class post-zygote_services
+    disabled
+    oneshot
+service iprenew_tiwlan0 /system/bin/dhcpcd -n
+    class post-zygote_services
+    disabled
+    oneshot
+
 service baseimage /system/bin/dspexec -v -T /system/lib/dsp/baseimage.dof
     class media_early_init
     user media
@@ -551,9 +588,6 @@ service locDrv /system/bin/brcm_guci_drv -config /system/etc/gpsconfig.xml
     class post-zygote_services
     user radio
     group radio inet sdcard_rw
-#service pm_init /system/bin/sh /system/usr/bin/pm_init.sh
-#    class post-zygote_services
-#    oneshot
 service modemlog /system/bin/modemlog
    class pre-zygote_services
    oneshot
@@ -573,39 +607,7 @@ service fmradio /system/bin/fmradioserver
     disabled
     user system
     group bluetooth net_bt_admin net_raw net_admin misc
-#service dlnasrv /system/bin/dlnasrv
-#    class post-zygote_services
-#    user mot_dlna
-#    group system net_admin sdcard_rw new_raw inet mount misc
-#    oneshot
-#    disabled
-#service dund_dialup /system/bin/dund --listen --channel=6 --nodetach --dialup
-#    class post-zygote_services
-#    group net_bt net_bt_admin
-#    disabled
-#    oneshot
-#on property:dev.bootcomplete=1
-#    start loadpreinstalls
-# ecckeyd daemon has dependency on SMC
-# It needs to be root because it needs to be able to read client's /proc/<pid>/status.
-# user/group as mot_tpapi/mot_tpapi does not give it enough permission
-#service ecckeydaemon /system/bin/ecckeyd
-#    class post-zygote_services
-#    socket ecckey_socket stream 660 mot_tpapi mot_tpapi
-#    group mot_tpapi
-#    disabled
-#    oneshot
-#on property:ro.service.start.smc=1
-#    start ecckeydaemon
-#service secclkd /system/bin/secclkd
-#    class post-zygote_services
-#    socket secclk_socket stream 660 mot_secclkd mot_secclkd
-#    user mot_tpapi
-#    group mot_tpapi mot_sec_rtc mot_secclkd
-#    oneshot
-#service dla /system/bin/dla
-#    class post-zygote_services
-#    oneshot
+
 #on property:tcmd.ctrl_adb=1
 #    setprop persist.service.adb.enable 1
 #    setprop persist.factory.allow_adb 1
@@ -621,9 +623,7 @@ service vpnclientpm /system/bin/vpnclientpm
     class post-zygote_services
     oneshot
     user root
-#service loadpreinstalls /system/bin/logwrapper /system/bin/loadpreinstalls.sh
-#    disabled
-#    oneshot
+
 #IKCBS-229 start RescueStarter for MobileRescue
 service RescueStarter /system/bin/RescueStarter
     user nobody
@@ -636,5 +636,4 @@ service RescueStarter /system/bin/RescueStarter
 #    exec /system/bin/encryption_test
 #    exec /system/bin/setprop sys.mot.encrypt.test ""
 
-###
-#exec /system/bootmenu/script/test.sh on_post-fs-end
+

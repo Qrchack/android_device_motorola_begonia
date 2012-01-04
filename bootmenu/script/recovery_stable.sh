@@ -86,7 +86,7 @@ echo 0 > /sys/class/leds/blue/brightness
 #############################
 
 # turn on button backlight (back button is used in CWM Recovery 3.x)
-echo 1 > /sys/class/leds/button-backlight/brightness
+#echo 1 > /sys/class/leds/button-backlight/brightness
 
 
 /sbin/recovery_stable
@@ -95,7 +95,7 @@ echo 1 > /sys/class/leds/button-backlight/brightness
 # Post Recovery (back to bootmenu)
 
 # bootmenu doesnt support buttons
-echo 0 > /sys/class/leds/button-backlight/brightness
+#echo 0 > /sys/class/leds/button-backlight/brightness
 
 # remount system & data if unmounted
 [ ! -d /data/data ] &&         mount -t yaffs2 -o rw,noatime,nodiratime,errors=continue /dev/block/mtdblock9 /data

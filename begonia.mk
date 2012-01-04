@@ -100,8 +100,7 @@ PRODUCT_PACKAGES += \
 	libVendor_ti_omx \
 	libLCML \
 	libOMX_Core \
-	sensors.begonia \
-	lights.begonia \
+	gps.begonia \
 	libaudiopolicy \
 	iwmulticall \
 	hostap \
@@ -127,7 +126,7 @@ PRODUCT_PACKAGES += \
 # PRODUCT_PACKAGES += libskiahw libOMX.TI.JPEG.Encoder libOMX.TI.JPEG.decoder
 
 # Add DroidSSHd (dropbear) Management App - tpruvot/android_app_droidsshd @ github
-PRODUCT_PACKAGES += DroidSSHd
+# PRODUCT_PACKAGES += DroidSSHd
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
@@ -167,7 +166,7 @@ PRODUCT_PACKAGES += \
         LiveWallpapers \
         LiveWallpapersPicker \
         MagicSmokeWallpapers \
-        VisualizationWallpapers
+        VisualizationWallpapers 
 
 # Publish that we support the live wallpaper feature.
 PRODUCT_COPY_FILES += \

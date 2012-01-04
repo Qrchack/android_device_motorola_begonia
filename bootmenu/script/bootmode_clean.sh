@@ -1,8 +1,6 @@
 #!/sbin/sh
 
-#mount_ext3.sh cache /cache
-
-export PATH=/sbin:/system/xbin:/system/bin
+export PATH=$PATH:/sbin:/system/xbin:/system/bin
 
 busybox mount -t yaffs2 -o nosuid,nodev,noatime,nodiratime /dev/block/mtdblock8 /cache
 

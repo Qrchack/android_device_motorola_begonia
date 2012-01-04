@@ -28,11 +28,13 @@ fi
 
 if [ "$TARGET_BUILD_TYPE" = "debug" ]; then
     OTAPACKAGE=$OUT/${TARGET_PRODUCT}_debug-ota-$TARGET_BUILD_VARIANT.$LOGNAME.zip
+elif [ "$TARGET_BUILD_VARIANT" = "userdebug" ]; then
+    OTAPACKAGE=$OUT/$TARGET_PRODUCT-ota-eng.$USER.zip
 else
     OTAPACKAGE=$OUT/$TARGET_PRODUCT-ota-$TARGET_BUILD_VARIANT.$LOGNAME.zip
 fi
 if [ ! -f "$OTAPACKAGE" ]; then
-	echo "$OTAPACKAGE doesn't exist!";
+	echo "$OTAPACKAGE doesn't exist!"
 	exit 1
 fi
 
@@ -127,7 +129,7 @@ $SED -i \
 	$REPACK/ota/system/build.prop
 
 # Include device specific script
-if [ "$TARGET_PRODUCT" = "cyanogen_begonia" ]; then
+if [ -f $ANDROID_BUILD_TOP/device/motorola/begonia/releasetools/squisher.sh ]; then
 	. $ANDROID_BUILD_TOP/device/motorola/begonia/releasetools/squisher.sh
 fi
 
@@ -150,14 +152,14 @@ if [ -z "$CYANOGEN_NIGHTLY" ]; then
 	OUTFILE=$OUT/update-cm-$MODVERSION-signed.zip
 else
 	OUTFILE=$OUT/update-squished.zip
-	if [ "$TARGET_PRODUCT" = "cyanogen_begonia" ]; then
-		MODVERSION=`sed -n -e'/ro\.modversion/s/^.*CyanogenMod-//p' $REPACK/ota/system/build.prop`
-		OUTFILE=$OUT/cm$MODVERSION.zip
-		if [ -n "$CYANOGEN_NIGHTLY_BOOT" ]; then
-			MODVERSION=`echo $MODVERSION | sed -r 's/NIGHTLY/BOOT'$CYANOGEN_NIGHTLY_BOOT'/'`
-			OUTFILE=$OUT/cm$MODVERSION.zip
-		fi
-	fi
+#	if [ "$TARGET_PRODUCT" = "cyanogen_begonia" ]; then
+#		MODVERSION=`sed -n -e'/ro\.modversion/s/^.*CyanogenMod-//p' $REPACK/ota/system/build.prop`
+#		OUTFILE=$OUT/cm$MODVERSION.zip
+#		if [ -n "$CYANOGEN_NIGHTLY_BOOT" ]; then
+#			MODVERSION=`echo $MODVERSION | sed -r 's/NIGHTLY/BOOT'$CYANOGEN_NIGHTLY_BOOT'/'`
+#			OUTFILE=$OUT/cm$MODVERSION.zip
+#		fi
+#	fi
 fi
 
 # Pack it up and sign
@@ -166,7 +168,7 @@ printf "Zipping package..."
 echo
 printf "Signing package..."
 SECURITYDIR=$ANDROID_BUILD_TOP/build/target/product/security
-java -Xmx512m \
+java -Xmx768m \
 	-jar $ANDROID_BUILD_TOP/out/host/$OUT_TARGET_HOST/framework/signapk.jar \
 	-w $SECURITYDIR/testkey.x509.pem $SECURITYDIR/testkey.pk8 \
 	$REPACK/update.zip $OUTFILE
@@ -183,6 +185,10 @@ $MD5 $img >$img.md5sum
 echo
 echo "Package complete: $OUTFILE"
 cat $img.md5sum
+echo
+# Build date and current time:
+cat $OUT/system/build.prop | grep ro.build.date=
+date "+%Y%m%d-%H%M"
 echo
 )
 

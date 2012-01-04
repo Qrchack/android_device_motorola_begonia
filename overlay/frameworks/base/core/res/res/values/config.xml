@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /*
-** Copyright 2009, The Android Open Source Project
+** Copyright 2011 The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -29,7 +29,7 @@
     <!-- Flag indicating whether the surface flinger is inefficient
          at performing a blur.  Used by parts of the UI to turn off
          the blur effect where it isn't worth the performance hit. -->
-    <bool name="config_sf_slowBlur">true</bool>
+    <bool name="config_sf_slowBlur">false</bool>
     
     <!-- The duration (in milliseconds) of a short animation. -->
     <integer name="config_shortAnimTime">150</integer>
@@ -78,15 +78,16 @@
          be empty.  An example would be "usb.*" -->
     <string-array translatable="false" name="config_tether_usb_regexs">
         <item>usb0</item>
+	<item>usb.*</item>
     </string-array>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
          Wifi interfaces.  If the device doesn't want to support tethering over Wifi this
          should be empty.  An example would be "softap.*" -->
  <string-array translatable="false" name="config_tether_wifi_regexs">
-  <!--  <item>wl.*</item>
+  	<item>wl.*</item>
         <item>tiwlan.*</item>
-        <item>tiap.*</item> -->
+        <item>tiap.*</item> 
     </string-array>
 
     <!-- Dhcp range (min, max) to use for tethering purposes -->
@@ -98,6 +99,7 @@
     <string-array translatable="false" name="config_tether_upstream_regexs">
         <item>rmnet\\d</item>
         <item>tiwlan\\d</item>
+	<item>tiap\\d</item>
     </string-array>
 
     <!-- Boolean indicating if we require the use of DUN on mobile for tethering.
@@ -116,7 +118,7 @@
     <!-- Flag indicating whether the keyguard should be bypassed when
          the slider is open.  This can be set or unset depending how easily
          the slider can be opened (for example, in a pocket or purse). -->
-    <bool name="config_bypass_keyguard_if_slider_open">false</bool>
+    <bool name="config_bypass_keyguard_if_slider_open">true</bool>
     
     <!-- Flag indicating whether the we should enable the automatic brightness in Settings.
          Software implementation will be used if config_hardware_auto_brightness_available is not set -->
@@ -343,10 +345,10 @@
     <!-- 2 means give warning -->
     <integer name="config_datause_notification_type">2</integer>
 
-    <bool name="config_animateScreenLights">false</bool>
+    <bool name="config_animateScreenLights">true</bool>
 
     <!-- Allows the light sensor to be ignored when flashlight is on -->
-    <bool name="config_flashlight_affects_lightsensor">true</bool>
+    <bool name="config_flashlight_affects_lightsensor">false</bool>
 
     <!-- Enables SIP on WIFI only -->
     <bool name="config_sip_wifi_only">false</bool>

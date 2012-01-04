@@ -95,7 +95,7 @@ echo 1 > /sys/class/leds/button-backlight/brightness
 # Post Recovery (back to bootmenu)
 
 # bootmenu doesnt support buttons
-echo 0 > /sys/class/leds/button-backlight/brightness
+#echo 0 > /sys/class/leds/button-backlight/brightness
 
 # remount system & data if unmounted
 [ ! -d /data/data ] &&         mount -t yaffs2 -o rw,noatime,nodiratime,errors=continue /dev/block/mtdblock9 /data

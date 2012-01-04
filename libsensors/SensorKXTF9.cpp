@@ -140,13 +140,16 @@ void SensorKXTF9::processEvent(int code, int value)
     {
         case ABS_X:
             mPendingEvent.acceleration.y = value * KXTF9_CONVERT_A_X * -1;
-            break;
+            //mPendingEvent.acceleration.x = value * KXTF9_CONVERT_A_X;
+			break;
         case ABS_Y:
             mPendingEvent.acceleration.x = value * KXTF9_CONVERT_A_Y * -1;
-            break;
+            //mPendingEvent.acceleration.y = value * KXTF9_CONVERT_A_Y;
+			break;
         case ABS_Z:
             mPendingEvent.acceleration.z = value * KXTF9_CONVERT_A_Z * -1;
-            break;
+            //mPendingEvent.acceleration.z = value * KXTF9_CONVERT_A_Z;
+			break;
     }
 }
 
