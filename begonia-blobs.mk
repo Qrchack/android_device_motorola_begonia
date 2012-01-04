@@ -39,9 +39,15 @@ PRODUCT_COPY_FILES += \
 
 #prebuilt binaries (for buggy versions)
 PRODUCT_COPY_FILES += \
-	device/motorola/begonia/prebuilt/bin/iptables:system/bin/iptables \
 	device/motorola/begonia/prebuilt/bin/fixDelSystem.sh:system/bin/fixDelSystem.sh \
-	device/motorola/begonia/prebuilt/bin/install2ndInit.sh:system/bin/install2ndInit.sh	
+	device/motorola/begonia/prebuilt/bin/install2ndInit.sh:system/bin/install2ndInit.sh
+#	device/motorola/begonia/prebuilt/bin/iptables:system/bin/iptables \
+
+#app
+PRODUCT_COPY_FILES += \
+	device/motorola/begonia/prebuilt/app/DroidSSHd.apk:system/app/DroidSSHd.apk \
+	device/motorola/begonia/prebuilt/lib/libNativeSSHd.so:system/lib/libNativeSSHd.so 
+#	device/motorola/begonia/prebuilt/app/basebandswitcherV4.0.apk:system/app/basebandswitcherV4.0.apk
 
 ifdef CYANOGEN_RELEASE
 	PRODUCT_COPY_FILES += device/motorola/begonia/custom_backup_release.txt:system/etc/custom_backup_list.txt
@@ -76,6 +82,7 @@ PRODUCT_COPY_FILES += \
 	device/motorola/begonia/bootmenu/binary/logwrapper.bin:system/bin/logwrapper.bin \
 	device/motorola/begonia/bootmenu/binary/lsof.static:system/bootmenu/binary/lsof \
 	device/motorola/begonia/bootmenu/binary/2nd-init.common:system/bootmenu/binary/2nd-init \
+	device/motorola/begonia/bootmenu/binary/busybox:system/bootmenu/binary/busybox \
 	device/motorola/begonia/bootmenu/config/bootmenu_bypass:system/bootmenu/config/bootmenu_bypass \
 	device/motorola/begonia/bootmenu/config/default.prop:system/bootmenu/config/default.prop \
 	device/motorola/begonia/bootmenu/config/default_bootmode.conf:system/bootmenu/config/default_bootmode.conf \

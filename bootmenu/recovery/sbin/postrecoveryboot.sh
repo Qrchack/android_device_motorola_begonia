@@ -13,23 +13,24 @@ do
     sleep 1
 done
 
-busybox mount -orw,remount /
+mount -o remount,rw /
 rm -r /tmp
 mkdir -p /tmp
+touch /tmp/recovery.log
 rm sdcard
 mkdir sdcard
 
 
 # Restart with root hacked adbd
-mount -orw,remount /
-busybox kill $(busybox ps | busybox grep adbd)
-echo msc_adb > /dev/usb_device_mode
-touch /tmp/recovery.log
+#mount -o remount,rw /
+#busybox kill $(busybox ps | busybox grep adbd)
+#echo msc_adb > /dev/usb_device_mode
+#touch /tmp/recovery.log
 
 
 sync
-/sbin/adbd &
+#/sbin/adbd &
 
-sleep 1
-umount -l /system
+#sleep 1
+#umount -l /system
 #/sbin/adbd recovery &

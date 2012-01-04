@@ -1,4 +1,4 @@
-# Copyright (C) 2009 The Android Open Source Project
+# Copyright (C) 2011 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -34,23 +34,36 @@ TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_GLOBAL_CFLAGS += -mtune=cortex-a8
 TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a8
 TARGET_OMAP3 := true
-COMMON_GLOBAL_CFLAGS += -DTARGET_OMAP3 -DOMAP_COMPAT
+COMMON_GLOBAL_CFLAGS += -DTARGET_OMAP3 -DOMAP_COMPAT -DMOTOROLA_UIDS
 # hack for WVGA records 
-COMMON_GLOBAL_CFLAGS += -DINCREASE_WVGA_BUFSIZE
+COMMON_GLOBAL_CFLAGS += -DWVGA_BUFFERS
+
+# test for wifi calling
+BOARD_USE_KINETO_COMPATIBILITY := true
+
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_PREINSTALL := true
+TARGET_NO_RADIOIMAGE := false
+TARGET_BOOTLOADER_BOARD_NAME := begonia
 
 # Wifi related defines
+#BOARD_WLAN_DEVICE           := tiwlan0
+BOARD_WLAN_DEVICE           := wl1271
+BOARD_SOFTAP_DEVICE         := wl1271
 BOARD_WPA_SUPPLICANT_DRIVER := CUSTOM
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := libCustomWifi
+#BOARD_WPA_SUPPLICANT_PRIVATE_LIB := libCustomWifi
+AP_CONFIG_DRIVER_WILINK     := true
 WPA_SUPPLICANT_VERSION      := VER_0_6_X
-BOARD_WLAN_DEVICE           := tiwlan0
+WPA_SUPPL_APPROX_USE_RSSI   := true
 WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/tiwlan_drv.ko"
-BOARD_WLAN_TI_STA_DK_ROOT   := system/wlan/ti/wilink_6_1
-WIFI_DRIVER_MODULE_ARG      := ""
-WIFI_DRIVER_MODULE_NAME     := "tiwlan_drv"
-WIFI_FIRMWARE_LOADER        := "wlan_loader"
+#WIFI_DRIVER_MODULE_ARG      := ""
+WIFI_DRIVER_MODULE_NAME     := tiwlan_drv
 WIFI_DRIVER_FW_STA_PATH     := "/system/etc/wifi/fw_wlan1271.bin"
 WIFI_DRIVER_FW_AP_PATH      := "/system/etc/wifi/fw_tiwlan_ap.bin"
-#PRODUCT_WIRELESS_TOOLS      := true
+WIFI_FIRMWARE_LOADER        := wlan_loader
+#BOARD_WLAN_TI_STA_DK_ROOT   := system/wlan/ti/wilink_6_1
+PRODUCT_WIRELESS_TOOLS      := true
+
 
 # omap3 compat global
 HARDWARE_OMX := true
@@ -66,11 +79,14 @@ BOARD_USE_YUV422I_DEFAULT_COLORFORMAT := true
 BOARD_USES_GENERIC_AUDIO := false
 BUILD_WITH_TI_AUDIO := 1
 
+# Gps wrapper
+BOARD_USES_GPSSHIM := true
+BOARD_GPS_LIBRARIES := libgps
+
 # Graphics
 BOARD_EGL_CFG := device/motorola/begonia/egl.cfg
 BOARD_NO_RGBX_8888 := true
 BUILD_PV_VIDEO_ENCODERS := 1	
-BOARD_USE_KINETO_COMPATIBILITY := true
 
 # Blue Tooth
 BOARD_HAVE_BLUETOOTH := true
@@ -88,27 +104,24 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 
 # Mass Storage
 BOARD_USE_USB_MASS_STORAGE_SWITCH := true
+BOARD_MASS_STORAGE_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun0/file"
 
 # Changes related to bootmenu
 BOARD_USES_BOOTMENU := true
-TARGET_NO_BOOTLOADER := true
-TARGET_NO_PREINSTALL := true
-TARGET_BOOTLOADER_BOARD_NAME := begonia
-
-# TODO: is this define for disable build the recovery & kernel the rom package file ?
-# This option may be removed in the future
-#TARGET_NO_RECOVERY := true
-#TARGET_NO_KERNEL := true
+BOARD_BOOTMODE_CONFIG_FILE := /cache/recovery/bootmode.conf
 
 # Keep old variables until system core patch is merged
 #TARGET_RECOVERY_PRE_COMMAND := "/system/bootmenu/script/reboot_command.sh recovery"
 #TARGET_RECOVERY_PRE_COMMAND_CLEAR_REASON := true
 
 # Recovery
+TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 BOARD_CUSTOM_RECOVERY_KEYMAPPING:= ../../device/motorola/begonia/recovery_ui.c
 BOARD_HAS_NO_MISC_PARTITION := false
 BOARD_RECOVERY_IGNORE_BOOTABLES := true
 BOARD_HAS_SMALL_RECOVERY := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_NEVER_UMOUNT_SYSTEM := true
 #TARGET_RECOVERY_UI_LIB := librecovery_ui_generic
 #TARGET_RECOVERY_UPDATER_LIBS += librecovery_updater_generic

@@ -3,11 +3,15 @@
 
 # Delete unwanted apps
 rm -f $REPACK/ota/system/app/RomManager.apk
-rm -f $REPACK/ota/system/app/FM.apk
-rm -f $REPACK/ota/system/xbin/irssi
+#rm -f $REPACK/ota/system/app/FM.apk
+#rm -f $REPACK/ota/system/xbin/irssi
+
+# these scripts are not required
+rm $REPACK/ota/system/etc/init.d/03firstboot
+rm $REPACK/ota/system/etc/init.d/04modules
 
 mkdir -p $REPACK/ota/system/etc/terminfo/x
-mkdir -p $REPACK/ota/system/etc/terminfo/x/xterm
+#mkdir -p $REPACK/ota/system/etc/terminfo/x/xterm
 cp $REPACK/ota/system/etc/terminfo/l/linux $REPACK/ota/system/etc/terminfo/x/xterm
 
 # prebuilt boot, devtree, logo & updater-script
