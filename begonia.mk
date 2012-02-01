@@ -108,6 +108,8 @@ PRODUCT_PACKAGES += \
 	libhostapdcli \
 	bootmenu \
 	Usb \
+	mot_boot_mode \
+	charge_only_mode \
 	su
 # libOMX.TI.JPEG.Encoder \	
 # libcamera \
