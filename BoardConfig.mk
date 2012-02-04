@@ -45,8 +45,8 @@ TARGET_NO_BOOTLOADER := false
 TARGET_NO_PREINSTALL := true
 TARGET_NO_RADIOIMAGE := false
 TARGET_BOOTLOADER_BOARD_NAME := begonia
-TARGET_NO_KERNEL := false
-TARGET_NO_RECOVERY := false
+#TARGET_NO_KERNEL := false
+#TARGET_NO_RECOVERY := false
 
 # Wifi related defines
 #BOARD_WLAN_DEVICE           := tiwlan0
