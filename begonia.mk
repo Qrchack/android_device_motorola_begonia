@@ -79,6 +79,45 @@ PRODUCT_COPY_FILES += \
 	frameworks/base/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
 	frameworks/base/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml
 
+# ICS sound
+PRODUCT_PACKAGES += \
+	hcitool hciattach hcidump \
+	libaudioutils audio.a2dp.default audio_policy.begonia \
+	libaudiohw_legacy audio.primary.begonia \
+
+# TO FIX for ICS
+#PRODUCT_PACKAGES += gralloc.jordan hwcomposer.jordan
+PRODUCT_PACKAGES += gralloc.default hwcomposer.default
+
+PRODUCT_PACKAGES += 	Camera camera.begonia
+
+# Wifi packages
+PRODUCT_PACKAGES += iwmulticall hostap wlan_loader wlan_cu wpa_supplicant
+PRODUCT_PACKAGES += libhostapdcli libCustomWifi libwpa_client libtiOsLib
+PRODUCT_PACKAGES += tiwlan.ini dhcpcd.conf wpa_supplicant.conf hostapd.conf
+PRODUCT_PACKAGES += tiap_loader tiap_cu ndc
+
+# OMX stuff
+PRODUCT_PACKAGES += dspexec libbridge libLCML libOMX_Core
+PRODUCT_PACKAGES += libOMX.TI.AAC.encode libOMX.TI.AAC.decode libOMX.TI.AMR.decode
+PRODUCT_PACKAGES += libOMX.TI.WBAMR.encode libOMX.TI.MP3.decode libOMX.TI.WBAMR.decode
+PRODUCT_PACKAGES += libOMX.TI.WMA.decode libOMX.TI.Video.Decoder libOMX.TI.Video.encoder
+
+PRODUCT_PACKAGES += e2fsck
+
+PRODUCT_PACKAGES += 	librs_jni 
+
+# CM9 apps
+PRODUCT_PACKAGES += Trebuchet FileManager Torch
+
+
+PRODUCT_PACKAGES += \
+	bootmenu \
+	static_busybox \
+	Usb \
+	su
+
+
 PRODUCT_PACKAGES += \
 	librs_jni \
 	tiwlan.ini \
@@ -170,7 +209,7 @@ PRODUCT_PACKAGES += \
         LiveWallpapersPicker \
         MagicSmokeWallpapers \
         VisualizationWallpapers \
-	Launcher2
+		Launcher2
 
 # Publish that we support the live wallpaper feature.
 PRODUCT_COPY_FILES += \
