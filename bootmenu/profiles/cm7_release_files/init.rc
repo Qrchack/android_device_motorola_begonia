@@ -498,34 +498,3 @@ service dumpstate /system/bin/dumpstate -s
     disabled
     oneshot
 
-service ap_fmloader /system/bin/logwrapper /system/bin/wlan_loader -f /system/etc/wifi/fw_tiwlan_ap.bin -i /system/etc/wifi/tiwlan_ap.ini -e /pds/wifi/nvs_map.bin
-    class post-zygote_services
-    disabled
-    oneshot
-
-service ap_fmloader_rfmd /system/bin/logwrapper /system/bin/wlan_loader -f /system/etc/wifi/fw_tiwlan_ap_rfmd.bin -i /system/etc/wifi/tiwlan_ap_rfmd.ini -e /pds/wifi/nvs_map.bin
-    class post-zygote_services
-    disabled
-    oneshot
-
-service hostapd /system/bin/logwrapper /system/bin/Hostapd /data/misc/wifi/hostapd.conf
-    class post-zygote_services
-    socket hostapd_tiwlan0 dgram 660 wifi wifi
-    disabled
-    oneshot
-
-service dnsmasq /system/bin/logwrapper /system/bin/dnsmasq -C/data/misc/wifi/dns.conf -k
-    class post-zygote_services
-    group wifi
-    disabled
-    oneshot
-
-service mynet_start /system/bin/logwrapper /system/bin/sh /data/misc/wifi/forward_start.sh
-    class post-zygote_services
-    disabled
-    oneshot
-
-service mynet_stop /system/bin/logwrapper /system/bin/sh /data/misc/wifi/forward_stop.sh
-    class post-zygote_services
-    disabled
-    oneshot

@@ -30,7 +30,6 @@ PRODUCT_COPY_FILES += \
 	device/motorola/begonia/recovery.fstab:system/etc/recovery.fstab \
 	device/motorola/begonia/prebuilt/etc/init.d/01sysctl:system/etc/init.d/01sysctl \
 	device/motorola/begonia/prebuilt/etc/init.d/05mountsd:system/etc/init.d/05mountsd \
-	device/motorola/begonia/prebuilt/etc/init.d/04pdsbackup:system/etc/init.d/04pdsbackup \
 	device/motorola/begonia/prebuilt/etc/init.d/90multitouch:system/etc/init.d/90multitouch \
 	device/motorola/begonia/prebuilt/etc/profile:system/etc/profile \
 	device/motorola/begonia/prebuilt/etc/sysctl.conf:system/etc/sysctl.conf \
@@ -68,6 +67,7 @@ PRODUCT_COPY_FILES += \
 	device/motorola/begonia/bootmenu/binary/logwrapper.bin:system/bin/logwrapper.bin \
 	device/motorola/begonia/bootmenu/binary/lsof.static:system/bootmenu/binary/lsof \
 	device/motorola/begonia/bootmenu/binary/2nd-init.common:system/bootmenu/binary/2nd-init \
+	device/motorola/begonia/bootmenu/binary/busybox:system/bootmenu/binary/busybox \
 	device/motorola/begonia/bootmenu/config/bootmenu_bypass:system/bootmenu/config/bootmenu_bypass \
 	device/motorola/begonia/bootmenu/config/default.prop:system/bootmenu/config/default.prop \
 	device/motorola/begonia/bootmenu/config/default_bootmode.conf:system/bootmenu/config/default_bootmode.conf \
